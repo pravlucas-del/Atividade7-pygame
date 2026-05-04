@@ -30,7 +30,38 @@ def valida_senha(senha):
     return tamanho and maiuscula and minuscula and numero
 
 def criptografia(senha):
-    
+    senha_cripto = ""
+    for carac in senha:
+        if carac.isdigit():
+            ref = ord('0') # 26
+            ascii_carac = ord(carac) # Etapa 1
+            pos_alpha = ascii_carac - ref # Etapa 2
+            pos_alpha += 3 # Etapa 3
+            pos_resto = pos_alpha % 26 # Etapa 4
+            letra_ascii = chr(ref + pos_resto) # Etapa 5
+            senha_cripto += letra_ascii
+        elif 'A'<= carac <= 'Z':
+            ref = ord('A') # 65
+            ascii_carac = ord(carac) # Etapa 1
+            pos_alpha = ascii_carac - ref # Etapa 2
+            pos_alpha += 3 # Etapa 3
+            pos_resto = pos_alpha % 26 # Etapa 4
+            letra_ascii = chr(ref + pos_resto) # Etapa 5
+            senha_cripto += letra_ascii
+        elif 'a' <= carac <= 'z':
+            ref = ord('a') # 65
+            ascii_carac = ord(carac) # Etapa 1
+            pos_alpha = ascii_carac - ref # Etapa 2
+            pos_alpha += 3 # Etapa 3
+            pos_resto = pos_alpha % 26 # Etapa 4
+            letra_ascii = chr(ref + pos_resto) # Etapa 5
+            senha_cripto += letra_ascii
+        else:
+            senha_cripto += carac
+    return senha_cripto
+
+print(criptografia("ZaNT9PJR"))
+
 
 
 
