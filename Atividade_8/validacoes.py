@@ -1,103 +1,100 @@
-# ==========================================
-# ATIVIDADE 8 - VALIDAÇÕES
-# ==========================================
-# Função para validar e-mail (100XP)
-# Função para validar senha segura (100XP)
+"""
+Módulo de Validações
+Valida e-mail e força de senha
+"""
 
 def validar_email(email):
     """
-    Valida se um e-mail termina com '@puc.com'
+    Valida um e-mail.
+    O e-mail é válido quando termina com "@puc.com"
     
     Args:
         email (str): E-mail a ser validado
-        
+    
     Returns:
         bool: True se válido, False caso contrário
+    
+    (100XP)
     """
-    return isinstance(email, str) and email.endswith("@puc.com")
+    if isinstance(email, str) and email.endswith("@puc.com"):
+        return True
+    return False
 
 
 def validar_senha_segura(senha):
     """
-    Valida se uma senha é segura (boa).
+    Valida se uma senha é segura/boa.
     
     Critérios:
     - Mínimo 8 caracteres
-    - Pelo menos 1 letra maiúscula
-    - Pelo menos 1 letra minúscula
-    - Pelo menos 1 número
+    - Pelo menos uma letra maiúscula
+    - Pelo menos uma letra minúscula
+    - Pelo menos um número
     
     Args:
         senha (str): Senha a ser validada
-        
+    
     Returns:
         bool: True se a senha é segura, False caso contrário
+    
+    (100XP)
     """
     if not isinstance(senha, str):
         return False
     
-    # Validação de comprimento
+    # Verificar comprimento mínimo
     if len(senha) < 8:
         return False
     
-    # Validação de letra maiúscula
-    tem_maiuscula = any(char.isupper() for char in senha)
-    if not tem_maiuscula:
-        return False
+    # Verificar se tem pelo menos uma letra maiúscula
+    tem_maiuscula = any(c.isupper() for c in senha)
     
-    # Validação de letra minúscula
-    tem_minuscula = any(char.islower() for char in senha)
-    if not tem_minuscula:
-        return False
+    # Verificar se tem pelo menos uma letra minúscula
+    tem_minuscula = any(c.islower() for c in senha)
     
-    # Validação de número
-    tem_numero = any(char.isdigit() for char in senha)
-    if not tem_numero:
-        return False
+    # Verificar se tem pelo menos um número
+    tem_numero = any(c.isdigit() for c in senha)
     
-    return True
+    return tem_maiuscula and tem_minuscula and tem_numero
 
 
-# ==========================================
-# TESTES
-# ==========================================
+# Testes das funções de validação
 if __name__ == "__main__":
     print("=" * 50)
     print("TESTES DE VALIDAÇÃO")
     print("=" * 50)
     
-    # Testes de E-mail
-    print("\n--- TESTES DE E-MAIL ---")
+    # Testes de e-mail
+    print("\n--- Testes de E-mail ---")
     emails_teste = [
-        ("user@puc.com", True),
-        ("admin@puc.com", True),
-        ("teste@gmail.com", False),
-        ("aluno@puc.br", False),
-        ("invalido@puc.co", False),
+        ("joao@puc.com", True),
+        ("maria@puc.com", True),
+        ("admin@gmail.com", False),
+        ("user@puc.br", False),
+        ("@puc.com", True),  # Válido tecnicamente
     ]
     
     for email, esperado in emails_teste:
         resultado = validar_email(email)
         status = "✓" if resultado == esperado else "✗"
-        print(f"{status} Email: {email} -> {resultado} (esperado: {esperado})")
+        print(f"{status} validar_email('{email}') = {resultado} (esperado: {esperado})")
     
-    # Testes de Senha
-    print("\n--- TESTES DE SENHA SEGURA ---")
+    # Testes de senha
+    print("\n--- Testes de Senha Segura ---")
     senhas_teste = [
-        ("Senha123", True),           # Válida
-        ("Abc12345", True),           # Válida
-        ("senha123", False),          # Sem maiúscula
-        ("SENHA123", False),          # Sem minúscula
-        ("Senha", False),             # Sem número
-        ("Senha1", False),            # Menos de 8 caracteres
-        ("SenhaSegura1", True),       # Válida
-        ("12345678", False),          # Só números
-        ("Abc", False),               # Muito curta
+        ("Senha123", True),      # Válida
+        ("Abc12345", True),      # Válida
+        ("senha123", False),     # Sem maiúscula
+        ("SENHA123", False),     # Sem minúscula
+        ("SenhaABC", False),     # Sem número
+        ("Sen1", False),         # Muito curta
+        ("SenhaSegura1", True),  # Válida
+        ("A1b2c3d4", True),      # Válida
     ]
     
     for senha, esperado in senhas_teste:
         resultado = validar_senha_segura(senha)
         status = "✓" if resultado == esperado else "✗"
-        print(f"{status} Senha: {senha:20} -> {resultado:5} (esperado: {esperado})")
+        print(f"{status} validar_senha_segura('{senha}') = {resultado} (esperado: {esperado})")
     
     print("\n" + "=" * 50)
