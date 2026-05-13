@@ -7,7 +7,6 @@ t = Turtle()
 t.speed(0)
 colormode(255)
 sleep 
-#t.screen.bgcolor('black')
 
 
 def randomColor():
