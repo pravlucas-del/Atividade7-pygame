@@ -57,6 +57,33 @@ def arvore(t,size):
     t.lt(30) # Gira 30 graus para a esquerda para retornar à posição original
     t.bk(size) # Move para trás com o tamanho especificado para retornar à posição original
     
+def triangulo(order, size, t):
+    if order == 0: # Condição de parada para a recursão, quando a ordem do triângulo for 0, a função desenha um triângulo simples e retorna
+        for _ in range(3): # Para cada um dos 3 lados do triângulo
+            t.forward(size) # Move para frente com o tamanho especificado para desenhar um lado do triângulo
+            t.left(120) # Gira 120 graus para a esquerda para criar a forma de triângulo
+    else:
+        # Desenha 3 triângulos menores
+        for _ in range(3): # Para cada um dos 3 triângulos menores
+            triangulo(order-1, size/2, t) # Chama a função triangulo recursivamente para desenhar um triângulo menor com ordem reduzida e tamanho reduzido
+            t.forward(size/2) # Move para frente com metade do tamanho para posicionar a tartaruga para o próximo triângulo menor
+            t.left(120) # Gira 120 graus para a esquerda para posicionar a tartaruga para o próximo triângulo menor
+    t.color('yellow') # Define a cor da caneta usando a função randomColor() para adicionar variedade de cores ao desenho
+
+def spiral(t,size,angle):
+    if size == 0: # Condição de parada para a recursão, quando o tamanho da espiral for 0, a função retorna sem fazer nada
+        return
+    t.color(randomColor()) # Define a cor da caneta usando a função randomColor() para adicionar variedade de cores ao desenho
+    t.fd(size) # Move para frente com o tamanho especificado para desenhar um segmento da espiral
+    t.rt(angle) # Gira para a direita com o ângulo especificado para criar o efeito de espiral
+    spiral(t,size-1,angle) # Chama a função spiral recursivamente com um tamanho reduzido para criar o próximo segmento da espiral    
+
+def fractalSpiral(size, angle, amount):
+  for i in range(amount):
+    forward(size)
+    left(angle)
+    forward(size + 50)
+    left(angle + 10)
 
 t.screen.bgcolor("#00567E")
 drawSquareFractal(t,200)
@@ -66,6 +93,17 @@ t.screen.bgcolor("#2E0404")
 estrela(t,450)
 sleep(5)
 t.clear()
+t.screen.bgcolor("#053F32")
+triangulo(4,500,t)
+sleep(5)
+t.clear()
+t.screen.bgcolor("white")
+fractalSpiral(50, 60, 90)
+sleep(5)
+t.clear()
+fractalSpiral(50, 70, 600)
+sleep(5)
+t.clear()
 t.screen.bgcolor("#080852")
 t.pu()
 t.goto(0,-50)
@@ -73,8 +111,6 @@ t.pd()
 t.setheading(90)
 arvore(t,100)
 sleep(5)
-
-
 mainloop()
 
 drawSquareFractal(t,50)
