@@ -84,19 +84,20 @@ def fractalSpiral(t,size, angle, amount):
     t.forward(size + 50)
     t.left(angle + 10)
 
+
 t.screen.bgcolor("#00567E")
 drawSquareFractal(t,200)
-sleep(5)
-t.clear()
-
-t.screen.bgcolor("#2E0404")
-estrela(t,450)
 sleep(5)
 t.clear()
 
 t.screen.bgcolor("white")
 t.pd()
 fractalSpiral(t,100, 90, 200)
+sleep(5)
+t.clear()
+
+t.screen.bgcolor("#2E0404")
+estrela(t,450)
 sleep(5)
 t.clear()
 
