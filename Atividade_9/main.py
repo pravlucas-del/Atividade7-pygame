@@ -19,7 +19,6 @@ def randomColor():
 def drawSquare(t,size):
     t.pu() # Levanta a caneta para não desenhar enquanto se move para a posição inicial
     t.pd() # Levanta a caneta para não desenhar enquanto se move para a posição inicial
-    #t.color(randomColor())
     t.begin_fill() # Inicia o preenchimento do quadrado
     t.fillcolor(randomColor()) # Define a cor de preenchimento usando a função randomColor()
     for _ in range(4): # Desenha um quadrado
@@ -78,32 +77,39 @@ def spiral(t,size,angle):
     t.rt(angle) # Gira para a direita com o ângulo especificado para criar o efeito de espiral
     spiral(t,size-1,angle) # Chama a função spiral recursivamente com um tamanho reduzido para criar o próximo segmento da espiral    
 
-def fractalSpiral(size, angle, amount):
+def fractalSpiral(t,size, angle, amount):
   for i in range(amount):
-    forward(size)
-    left(angle)
-    forward(size + 50)
-    left(angle + 10)
+    t.forward(size)
+    t.left(angle)
+    t.forward(size + 50)
+    t.left(angle + 10)
 
 t.screen.bgcolor("#00567E")
 drawSquareFractal(t,200)
 sleep(5)
 t.clear()
+
 t.screen.bgcolor("#2E0404")
 estrela(t,450)
 sleep(5)
 t.clear()
+
+t.screen.bgcolor("white")
+t.pd()
+fractalSpiral(t,100, 90, 200)
+sleep(5)
+t.clear()
+
 t.screen.bgcolor("#053F32")
 triangulo(4,500,t)
 sleep(5)
 t.clear()
-t.screen.bgcolor("white")
-fractalSpiral(50, 60, 90)
+
+t.screen.bgcolor("black")
+fractalSpiral(t,50, 60, 100)
 sleep(5)
 t.clear()
-fractalSpiral(50, 70, 600)
-sleep(5)
-t.clear()
+
 t.screen.bgcolor("#080852")
 t.pu()
 t.goto(0,-50)
@@ -111,11 +117,5 @@ t.pd()
 t.setheading(90)
 arvore(t,100)
 sleep(5)
-mainloop()
-
-drawSquareFractal(t,50)
-    
-
-
 
 mainloop()
