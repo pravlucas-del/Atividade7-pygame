@@ -30,3 +30,11 @@ def contabiliza_totais(nums,lista_total):
 
 print(contabiliza_totais(nums,lista_total))
 
+def draw(screen):
+    screen_h = screen.get_heith()
+    for i in range (len(lista_total)):
+        x = 100 + i * 50
+        h = 20 * lista_total[i]
+        draw.rect(screen,(255,0,0),(x,screen_h - h,25,h))
+        draw.rect(screen,(255,0,0),(x,0,25,h))
+
