@@ -38,3 +38,7 @@ def draw(screen):
         draw.rect(screen,(255,0,0),(x,screen_h - h,25,h))
         draw.rect(screen,(255,0,0),(x,0,25,h))
 
+lista_nums = [100,120,130,120,150,100,160,200,190,110,115,125,135,]
+num = int(input("Digite um número"))
+lista_nums.append(num)
+
