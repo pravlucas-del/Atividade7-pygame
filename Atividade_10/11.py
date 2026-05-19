@@ -1,15 +1,15 @@
-import pygame
+from pygame import *
 import random
 import sys
 
 # Inicialização do PyGame e da fonte
-pygame.init()
-pygame.font.init()
+init()
+font.init()
 
 # Configurações da Janela
 LARGURA, ALTURA = 1000, 700
-tela = pygame.display.set_mode((LARGURA, ALTURA))
-pygame.display.set_caption("Trabalho Prático - Três Histogramas")
+tela = display.set_mode((LARGURA, ALTURA))
+display.set_caption("Trabalho Prático - Três Histogramas")
 
 # Cores
 COR_FUNDO = (20, 20, 20)
@@ -20,9 +20,9 @@ COR_BOTAO_HOVER = (70, 150, 230)
 COR_CAIXA_TEXTO = (40, 40, 40)
 
 # Fontes
-fonte_p = pygame.font.SysFont("Arial", 14)
-fonte_m = pygame.font.SysFont("Arial", 20, bold=True)
-fonte_g = pygame.font.SysFont("Arial", 28, bold=True)
+fonte_p = font.SysFont("Arial", 14)
+fonte_m = font.SysFont("Arial", 20, bold=True)
+fonte_g = font.SysFont("Arial", 28, bold=True)
 
 # -------------------------------------------------------------------------
 # GERAÇÃO DOS DADOS DOS HISTOGRAMAS
@@ -98,8 +98,8 @@ def desenhar_histograma(dados, num_faixas, cores, titulo):
     altura_grafico = 400
     
     # Desenha os Eixos X e Y
-    pygame.draw.line(tela, COR_EIXO, (origem_x, origem_y), (origem_x + largura_grafico, origin_y), 3) # Eixo X
-    pygame.draw.line(tela, COR_EIXO, (origem_x, origem_y), (origem_x, origem_y - altura_grafico), 3) # Eixo Y
+    draw.line(tela, COR_EIXO, (origem_x, origem_y), (origem_x + largura_grafico, origem_y), 3) # Eixo X
+    draw.line(tela, COR_EIXO, (origem_x, origem_y), (origem_x, origem_y - altura_grafico), 3) # Eixo Y
     
     frequencias = calcular_frequencias(dados, num_faixas)
     max_freq = max(frequencias) if max(frequencias) > 0 else 10
@@ -111,9 +111,9 @@ def desenhar_histograma(dados, num_faixas, cores, titulo):
         pos_y = origem_y - int((altura_grafico / num_marcador_y) * i)
         
         # Linha horizontal de grade bem suave
-        pygame.draw.line(tela, (50, 50, 50), (origem_x, pos_y), (origem_x + largura_grafico, pos_y), 1)
+        draw.line(tela, (50, 50, 50), (origem_x, pos_y), (origem_x + largura_grafico, pos_y), 1)
         # Traço de marcação no eixo Y
-        pygame.draw.line(tela, COR_EIXO, (origem_x - 5, pos_y), (origem_x, pos_y), 2)
+        draw.line(tela, COR_EIXO, (origem_x - 5, pos_y), (origem_x, pos_y), 2)
         
         txt_y = fonte_p.render(str(valor_y), True, COR_TEXTO)
         tela.blit(txt_y, (origem_x - 30, pos_y - 8))
@@ -133,7 +133,7 @@ def desenhar_histograma(dados, num_faixas, cores, titulo):
         
         # Desenha a barra se ela tiver elementos
         if freq > 0:
-            pygame.draw.rect(tela, cores[i], (x_barra + 4, y_barra, largura_barra - 8, altura_barra))
+            draw.rect(tela, cores[i], (x_barra + 4, y_barra, largura_barra - 8, altura_barra))
             
             # Mostra o número exato de elementos no topo da barra
             txt_freq = fonte_p.render(str(freq), True, COR_TEXTO)
@@ -144,7 +144,7 @@ def desenhar_histograma(dados, num_faixas, cores, titulo):
         valor_x = int(i * tamanho_faixa_valor)
         pos_x = origem_x + (i * largura_barra)
         
-        pygame.draw.line(tela, COR_EIXO, (pos_x, origem_y), (pos_x,起源_y + 5), 2)
+        draw.line(tela, COR_EIXO, (pos_x, origem_y), (pos_x,origem_y + 5), 2)
         txt_x = fonte_p.render(str(valor_x), True, COR_TEXTO)
         tela.blit(txt_x, (pos_x - txt_x.get_width() // 2, origem_y + 10))
 
@@ -155,20 +155,20 @@ histograma_atual = 1  # Controla qual histograma está ativo no menu (1, 2 ou 3)
 rodando = True
 
 while rodando:
-    mous_pos = pygame.mouse.get_pos()
+    mous_pos = mouse.get_pos()
     tela.fill(COR_FUNDO)
     
     # Definição visual dos botões do menu interativo (Setas)
-    btn_esq_rect = pygame.Rect(50, 320, 50, 50)
-    btn_dir_rect = pygame.Rect(900, 320, 50, 50)
+    btn_esq_rect = Rect(50, 320, 50, 50)
+    btn_dir_rect = Rect(900, 320, 50, 50)
     
     # Efeito Hover nos botões de navegação
     cor_b_esq = COR_BOTAO_HOVER if btn_esq_rect.collidepoint(mous_pos) else COR_BOTAO
     cor_b_dir = COR_BOTAO_HOVER if btn_dir_rect.collidepoint(mous_pos) else COR_BOTAO
     
     # Desenha botões de navegação (Setas estilizadas em caixas)
-    pygame.draw.rect(tela, cor_b_esq, btn_esq_rect, border_radius=5)
-    pygame.draw.rect(tela, cor_b_dir, btn_dir_rect, border_radius=5)
+    draw.rect(tela, cor_b_esq, btn_esq_rect, border_radius=5)
+    draw.rect(tela, cor_b_dir, btn_dir_rect, border_radius=5)
     
     txt_seta_e = fonte_m.render("<", True, COR_TEXTO)
     txt_seta_d = fonte_m.render(">", True, COR_TEXTO)
@@ -176,20 +176,20 @@ while rodando:
     tela.blit(txt_seta_d, (btn_dir_rect.x + 20, btn_dir_rect.y + 12))
 
     # Processamento de Eventos (Cliques, Teclado)
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
+    for evento in event.get():
+        if evento.type == QUIT:
             rodando = False
             
-        elif evento.type == pygame.MOUSEBUTTONDOWN:
+        elif evento.type == MOUSEBUTTONDOWN:
             # Evento de clique para avançar ou voltar no menu interativo
             if btn_esq_rect.collidepoint(evento.pos):
                 histograma_atual = 3 if histograma_atual == 1 else histograma_atual - 1
             elif btn_dir_rect.collidepoint(evento.pos):
                 histograma_atual = 1 if histograma_atual == 3 else histograma_atual + 1
                 
-        elif evento.type == pygame.KEYDOWN and histograma_atual == 3:
+        elif evento.type == KEYDOWN and histograma_atual == 3:
             # Captura de inputs do teclado nativos do PyGame apenas para o Histograma 3
-            if evento.key == pygame.K_RETURN:
+            if evento.key == K_RETURN:
                 if input_usuario_texto.strip():
                     try:
                         # Converte o texto separado por vírgula em lista de números inteiros
@@ -198,7 +198,7 @@ while rodando:
                         input_usuario_texto = "" # Limpa a caixa após dar Enter
                     except ValueError:
                         pass
-            elif evento.key == pygame.K_BACKSPACE:
+            elif evento.key == K_BACKSPACE:
                 input_usuario_texto = input_usuario_texto[:-1]
             else:
                 # Restringe o input apenas para números e vírgulas para facilitar a digitação
@@ -220,9 +220,9 @@ while rodando:
         desenhar_histograma(dados_h3, faixas_h3, cores_h3, "Histograma 3: Input do Usuário (Via PyGame)")
         
         # Desenho da interface gráfica para a caixa de Texto de Input do PyGame
-        caixa_input_rect = pygame.Rect(150, 620, 500, 35)
-        pygame.draw.rect(tela, COR_CAIXA_TEXTO, caixa_input_rect, border_radius=5)
-        pygame.draw.rect(tela, COR_EIXO, caixa_input_rect, 1, border_radius=5)
+        caixa_input_rect = Rect(150, 620, 500, 35)
+        draw.rect(tela, COR_CAIXA_TEXTO, caixa_input_rect, border_radius=5)
+        draw.rect(tela, COR_EIXO, caixa_input_rect, 1, border_radius=5)
         
         # Renderiza as instruções e o texto em tempo real conforme o usuário digita
         txt_instrucao = fonte_p.render("Digite números separados por vírgula (ex: 12,45,67,8) de 0 a 100 e aperte ENTER:", True, COR_TEXTO)
@@ -235,7 +235,7 @@ while rodando:
         txt_valores_atuais = fonte_p.render(f"Dados atuais: {str(dados_h3)}", True, (180, 180, 180))
         tela.blit(txt_valores_atuais, (150, 665))
 
-    pygame.display.flip()
+    display.flip()
 
-pygame.quit()
+quit()
 sys.exit()
